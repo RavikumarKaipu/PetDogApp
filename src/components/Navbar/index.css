@@ -1,0 +1,55 @@
+.custom-navbar {
+  background: linear-gradient(90deg, #1e1e2f, #151522);
+  padding: 0.8rem 1rem;
+  transition: background 0.3s ease-in-out;
+}
+  
+.brand-logo {
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: #f8f9fa !important;
+  transition: color 0.3s;
+}
+
+.brand-logo:hover {
+  color: #ff6b6b !important;
+}
+
+
+.nav-link-custom {
+  color: #e0e0e0 !important;
+  margin: 0 8px;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease-in-out;
+}
+
+
+.nav-link-custom::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0%;
+  height: 2px;
+  background: #ff6b6b;
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-link-custom:hover {
+  color: #ff6b6b !important;
+}
+
+.nav-link-custom:hover::after {
+  width: 100%;
+}
+
+
+.custom-navbar .navbar-toggler {
+  border: none;
+  outline: none;
+}
+
+.custom-navbar .navbar-toggler-icon {
+  filter: invert(1);
+}

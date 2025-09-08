@@ -1,0 +1,80 @@
+
+.pricing-section {
+  background: linear-gradient(135deg, #fff, #fef7f5);
+  border-radius: 12px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.pricing-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff6b6b;
+  position: relative;
+}
+
+.pricing-title::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -8px;
+  width: 80px;
+  height: 3px;
+  background: #ff6b6b;
+  border-radius: 4px;
+}
+
+
+.pricing-card {
+  border: none;
+  border-radius: 14px;
+  padding: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #ffffff;
+  text-align: center;
+  border: 2px solid goldenrod;
+}
+
+.pricing-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.pricing-icon {
+  font-size: 2.5rem;
+  margin-top: 10px;
+  transition: transform 0.3s ease;
+}
+
+.pricing-card:hover .pricing-icon {
+  transform: scale(1.2) rotate(18deg);
+}
+
+.pricing-name {
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.pricing-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ff6b6b;
+}
+
+.pricing-btn {
+  margin-top: 10px;
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
