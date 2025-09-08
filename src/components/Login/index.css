@@ -1,0 +1,114 @@
+/* Scoped styles for Login component */
+.login-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(-45deg, #6a11cb, #2575fc, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: login-gradient 15s ease infinite;
+  font-family: 'Poppins', sans-serif;
+  padding: 20px;
+}
+
+@keyframes login-gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.login-box {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  animation: login-fadeIn 1s ease forwards;
+}
+
+@keyframes login-fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.login-box h2 {
+  margin-bottom: 30px;
+  color: #fff;
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+/* Input Fields */
+.login-box .input-group {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.login-box .input-group input {
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  border-bottom: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.3s;
+}
+
+.login-box .input-group label {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  color: #fff;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.login-box .input-group input:focus ~ label,
+.login-box .input-group input:not(:placeholder-shown) ~ label {
+  top: -20px;
+  font-size: 0.8rem;
+  color: #23d5ab;
+}
+
+/* Button */
+.login-box .btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 50px;
+  background: #23d5ab;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-box .btn:hover {
+  background: orange;
+  transform: scale(1.05);
+}
+
+/* Optional: small text below button */
+.login-box p {
+  margin-top: 15px;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.login-box p a {
+  color: yellowgreen;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.login-box p a:hover {
+  color: #23a6d5;
+}
