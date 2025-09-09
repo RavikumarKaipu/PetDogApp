@@ -1,5 +1,5 @@
 .footer {
-  background: linear-gradient(135deg, black , #0d0d0e);
+  background-color: rgba(27, 22, 4, 0.744);
   color: white;
   text-align: center;
   padding: 30px 20px;
@@ -27,8 +27,13 @@
   margin: 5px 0;
   font-size: 0.95rem;
   opacity: 0.9;
+  color: orange;
 }
-
+.footer h4{
+  color: rgb(231, 205, 12);
+  font-family: 'Roboto';
+  
+}
 .social-links {
   margin-top: 15px;
 }

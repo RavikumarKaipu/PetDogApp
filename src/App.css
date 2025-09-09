@@ -20,11 +20,6 @@ body {
 }
 
 
-.container {
-
-}
-
-
 .container.my-4 {
 
   background: #ffffff;
@@ -57,20 +52,6 @@ p {
   box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
 }
 
-
-.footer {
-  background: #111827;
-  color: #d1d5db;
-  padding: 20px;
-  text-align: center;
-  margin-top: 40px;
-  border-top: 3px solid #2563eb;
-}
-
-.footer p {
-  margin: 5px 0;
-  font-size: 0.95rem;
-}
 
 
 @keyframes fadeIn {

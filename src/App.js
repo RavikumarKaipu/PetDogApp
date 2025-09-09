@@ -1,9 +1,7 @@
-// App.js
 import React from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-// Pages as sections
 import Home from "./components/Pages/Home";
 import Services from "./components/Pages/Services";
 import Programs from "./components/Pages/Programs";

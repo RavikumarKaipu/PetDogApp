@@ -1,5 +1,6 @@
 import React from "react";
 import "./index.css";
+import { Container } from "react-bootstrap";
 
 function Reviews() {
   const reviews = [
@@ -9,6 +10,7 @@ function Reviews() {
   ];
 
   return (
+    <Container>
     <div className="reviews-container">
       <h2 className="text-center">🐾 Client Reviews</h2>
       {reviews.map((r, i) => (
@@ -18,6 +20,7 @@ function Reviews() {
         </div>
       ))}
     </div>
+    </Container>
   );
 }
 
