@@ -1,78 +1,93 @@
 
-.home {
-  animation: fadeIn 1s ease-in-out;
+.home-main-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #d4b209;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  
 }
 
 
-.welcome-section {
-  background: linear-gradient(135deg, #fff, #fdf6f2);
-  border-radius: 12px;
-  padding: 50px 20px;
-  animation: fadeInUp 1.2s ease-in-out;
+.navbar {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 20px 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  animation: fadeIn 2s ease;
 }
 
-.welcome-title {
-  font-size: 2rem;
+.logo {
+  font-size: 24px;
   font-weight: bold;
-  color: #ff6b6b;
-  position: relative;
-}
-
-.welcome-title::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: -8px;
-  width: 70px;
-  height: 3px;
-  background: #ff6b6b;
-  border-radius: 4px;
-}
-
-
-.feature-card {
-  border: none;
-  border-radius: 12px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background: #fff;
-  text-align: center;
+  padding-right: 10px;
+  color: #d4b209;
+ animation: fadeIn 2s ease;
 
 }
-
-
-.feature-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
+.hero-section {
+  display: flex;
+  justify-content:end;
+  align-items:center;
+  padding: 80px 60px;
+  flex-wrap: wrap;
 }
 
-.feature-icon {
-  font-size: 2.5rem;
-  margin-top: 15px;
-  transition: transform 0.3s ease;
+.hero-text {
+  max-width: 500px;
 }
 
-.feature-card:hover .feature-icon {
-  transform: scale(1.2) rotate(10deg);
+.hero-text h1 {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  color: rgb(254, 192, 5);
 }
+
+.hero-text p {
+  font-size: 18px;
+  color: #e3dfd57f;
+  margin-bottom: 20px;
+}
+
 
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+    
+}
+
+@media (max-width: 900px) {
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 60px 20px;
   }
-  to {
-    opacity: 1;
+
+  .hero-image img {
+    margin-top: 30px;
   }
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .nav-links {
+    flex-direction: column;
+    gap: 15px;
   }
 }

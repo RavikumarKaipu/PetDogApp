@@ -1,5 +1,9 @@
+// App.js
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
+// Pages as sections
 import Home from "./components/Pages/Home";
 import Services from "./components/Pages/Services";
 import Programs from "./components/Pages/Programs";
@@ -9,28 +13,40 @@ import Pricing from "./components/Pages/Pricing";
 import About from "./components/Pages/About";
 import Contact from "./components/Pages/Contact";
 
-import './App.css'
-import Navbar from "./components/Navbar";  
-import Footer from "./components/Footer";
+import "./App.css";
 
 function App() {
   return (
-    <Router>
-      <Navbar />   
-      <div className="container my-4">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/programs" element={<Programs />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/reviews" element={<Reviews />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
+    <>
+      <div >
+            <Navbar/>
+        <section id="home">
+          <Home />
+        </section>
+        <section id="services">
+          <Services />
+        </section>
+        <section id="programs">
+          <Programs />
+        </section>
+        <section id="gallery">
+          <Gallery />
+        </section>
+        <section id="reviews">
+          <Reviews />
+        </section>
+        <section id="pricing">
+          <Pricing />
+        </section>
+        <section id="about">
+          <About />
+        </section>
+        <section id="contact">
+          <Contact />
+        </section>
       </div>
       <Footer />
-    </Router>
+    </>
   );
 }
 

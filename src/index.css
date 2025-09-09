@@ -75,15 +75,15 @@ button:hover {
 
 
 .container {
-  max-width: 1200px;
+
   margin: 0 auto;
-  padding: 1.2rem;
+
 }
 
 
 footer {
   text-align: center;
-  padding: 1rem;
+
   background: #111827;
   color: #d1d5db;
   margin-top: 2rem;
@@ -105,6 +105,6 @@ footer {
   }
 
   .container {
-    padding: 1rem;
+
   }
 }

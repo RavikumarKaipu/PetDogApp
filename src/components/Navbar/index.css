@@ -1,9 +1,6 @@
-.custom-navbar {
-  background: linear-gradient(90deg, #1e1e2f, #151522);
-  padding: 0.8rem 1rem;
-  transition: background 0.3s ease-in-out;
+.custom-navbar{
+  background-color: rgba(27, 22, 4, 0.744);
 }
-  
 .brand-logo {
   font-weight: bold;
   font-size: 1.4rem;
@@ -17,7 +14,7 @@
 
 
 .nav-link-custom {
-  color: #e0e0e0 !important;
+  color: #f7e30a !important;
   margin: 0 8px;
   font-weight: 500;
   position: relative;
@@ -52,4 +49,9 @@
 
 .custom-navbar .navbar-toggler-icon {
   filter: invert(1);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* adjust height of navbar */
 }
