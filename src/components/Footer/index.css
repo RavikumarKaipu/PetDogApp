@@ -29,11 +29,12 @@
   opacity: 0.9;
   color: orange;
 }
-.footer h4{
+
+.footer h4 {
   color: rgb(231, 205, 12);
   font-family: 'Roboto';
-  
 }
+
 .social-links {
   margin-top: 15px;
 }
@@ -57,24 +58,58 @@
 }
 
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
+@media (max-width: 992px) {
+  .footer {
+    padding: 25px 15px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .footer-logo {
+    font-size: 1.3rem;
+  }
+
+  .footer p {
+    font-size: 0.9rem;
+  }
+
+  .social-links a {
+    margin: 0 8px;
+    padding: 5px 10px;
+    font-size: 0.9rem;
   }
 }
 
-@keyframes popIn {
-  from {
-    transform: scale(0.8);
-    opacity: 0;
+
+@media (max-width: 576px) {
+  .footer {
+    padding: 20px 10px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
   }
-  to {
-    transform: scale(1);
-    opacity: 1;
+
+  .footer-logo {
+    font-size: 1.1rem;
+  }
+
+  .footer p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .footer h4 {
+    font-size: 1rem;
+  }
+
+  .social-links {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .social-links a {
+    margin: 5px 0;
+    padding: 6px 10px;
+    font-size: 0.85rem;
   }
 }
