@@ -1,82 +1,87 @@
 .login-main-container {
   width: 100%;
   height: 100vh;
-  background-size: cover;
   background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
+  perspective: 1000px;
 }
 
 .login-card {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 30px;
-  border-radius: 20px;
-  width: 350px;
-  text-align: center;
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+  width: 360px;
+  height: 500px;
   position: relative;
-  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease-in-out;
 }
 
 .login-card.rotate-card {
-  transform: rotateX(180deg);
+  transform: rotateY(180deg);
 }
 
-/* Dog image + eyes overlay */
-.dog-container {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  margin: 0 auto 20px auto;
-}
-
-.dog-img {
+.card-face {
+  background: rgba(230, 230, 228, 0.151);
+  padding: 30px;
+  border-radius: 20px;
   width: 100%;
-  height: auto;
-}
-
-/* eye overlay */
-.dog-eye {
+  height: 100%;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
   position: absolute;
-  width: 20px;
-  height: 8px;
-  background: black;
-  border-radius: 50%;
-  top: 45px; /* adjust based on dog image */
-  transition: all 0.3s ease-in-out;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  text-align: center;
 }
 
-.left-eye {
-  left: 32px; /* adjust based on dog image */
-}
-.right-eye {
-  right: 32px;
+.card-front {
+  transform: rotateY(0deg);
 }
 
-/* closed eyes */
-.dog-eye.closed {
-  height: 3px;
-  top: 50px;
+.card-back {
+  transform: rotateY(180deg);
 }
 
-/* peek when password shown */
-.dog-eye.peek {
-  height: 10px;
-  top: 42px;
-  background: #222;
+
+.login-style {
+  border-top: 6px solid #f77f00;
+}
+
+.login-style h1 {
+  color: #f77f00;
+}
+
+.signup-style {
+  border-top: 6px solid #0077b6;
+}
+
+.signup-style h1 {
+  color: #0077b6;
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 26px;
 }
 
 .input-group {
   margin-bottom: 15px;
+  position: relative;
 }
 
 .input-group input {
-  width: 100%;
-  padding: 10px;
+  width: 40vh;
+  padding: 8px;
   border-radius: 8px;
   border: 1px solid #ccc;
+  outline: none;
+  transition: border 0.3s;
 }
+
+.input-group input:focus {
+  border: 1px solid #f77f00;
+}
+
 
 .password-group {
   position: relative;
@@ -88,6 +93,7 @@
   top: 12px;
   cursor: pointer;
   color: #666;
+  font-size: 18px;
 }
 
 .login-btn {
@@ -107,8 +113,30 @@
   background: #ff9f1c;
 }
 
+.signup-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #0077b6;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.signup-btn:hover {
+  background: #0096c7;
+}
+
 .switch-signup span {
-  color: #f77f00;
+  color: #4200f7;
+  font-size: 1.4;
   cursor: pointer;
   font-weight: bold;
+}
+
+.signup-style .switch-signup span {
+  color: #0077b6;
 }

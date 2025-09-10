@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-
 import Home from "./components/Pages/Home";
 import Services from "./components/Pages/Services";
 import Programs from "./components/Pages/Programs";
@@ -10,44 +9,46 @@ import Reviews from "./components/Pages/Reviews";
 import Pricing from "./components/Pages/Pricing";
 import About from "./components/Pages/About";
 import Contact from "./components/Pages/Contact";
-
 import "./App.css";
 import LoginForm from "./components/Login";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <>
-      <div >
-            <Navbar/>
-            {/* <section id="login">
-              <LoginForm/>
-            </section> */}
-        <section id="home">
-          <Home />
-        </section>
-        <section id="services">
-          <Services />
-        </section>
-        <section id="programs">
-          <Programs />
-        </section>
-        <section id="gallery">
-          <Gallery />
-        </section>
-        <section id="reviews">
-          <Reviews />
-        </section>
-        <section id="pricing">
-          <Pricing />
-        </section>
-        <section id="about">
-          <About />
-        </section>
-        <section id="contact">
-          <Contact />
-        </section>
-      </div>
-      <Footer />
+      {!isLoggedIn ? (
+        <LoginForm onLoginSuccess={() => setIsLoggedIn(true)} />
+      ) : (
+        <div>
+          <Navbar />
+          <section id="home">
+            <Home />
+          </section>
+          <section id="services">
+            <Services />
+          </section>
+          <section id="programs">
+            <Programs />
+          </section>
+          <section id="gallery">
+            <Gallery />
+          </section>
+          <section id="reviews">
+            <Reviews />
+          </section>
+          <section id="pricing">
+            <Pricing />
+          </section>
+          <section id="about">
+            <About />
+          </section>
+          <section id="contact">
+            <Contact />
+          </section>
+          <Footer />
+        </div>
+      )}
     </>
   );
 }
