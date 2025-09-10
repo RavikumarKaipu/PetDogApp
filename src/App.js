@@ -18,7 +18,9 @@ function App() {
   return (
     <>
       {!isLoggedIn ? (
+        <section id="login">
         <LoginForm onLoginSuccess={() => setIsLoggedIn(true)} />
+          </section>
       ) : (
         <div>
           <Navbar />
