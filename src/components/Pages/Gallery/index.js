@@ -8,7 +8,7 @@ function Gallery() {
   return (
     <section className="gallery-section py-5">
       <Container>
-        <h2 className="gallery-title text-center mb-4">🐾 Pet Gallery</h2>
+        <h2 className="gallery-title text-center mb-4">🐾 Pet Gallery 🐾</h2>
         <Row>
           {images.map((num) => (
             <Col md={4} sm={6} xs={12} key={num} className="mb-4">

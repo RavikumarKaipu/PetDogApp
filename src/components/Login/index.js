@@ -1,91 +1,81 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import Cookies from "js-cookie";
+import React, { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./index.css";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showSubmitError, setShowSubmitError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [isSignup, setIsSignup] = useState(false);
 
-  const onSubmitSuccess = ({ token, username, isAdmin, email }) => {
-    Cookies.set("jwt_token", token, { expires: 30 }); // ✅ Fix
-    localStorage.setItem("user", username || "");
-    localStorage.setItem("userEmail", email);
-    localStorage.setItem("isAdmin", isAdmin ? "true" : "false");
-    navigate("/");
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    setIsTyping(e.target.value.length > 0);
   };
 
-  const onSubmitFailure = (msg) => {
-    setShowSubmitError(true);
-    setErrorMsg(msg);
+  const togglePassword = () => {
+    setShowPassword(!showPassword);
   };
 
-  const submitForm = async (event) => {
-    event.preventDefault();
-
-    try {
-      const response = await axios.post('https://bookmanage-backend.vercel.app/api/login', {
-        username,
-        password,
-      });
-
-      if (response.status === 200) {
-        onSubmitSuccess(response.data);
-      } else {
-        onSubmitFailure("Invalid credentials");
-      }
-    } catch (error) {
-      if (error.response) {
-        const message = error.response.data?.error || "Invalid credentials";
-        onSubmitFailure(message);
-      } else {
-        onSubmitFailure("Something went wrong. Please try again.");
-      }
-    }
+  const switchToSignup = () => {
+    setIsSignup(true);
+    setTimeout(() => setIsSignup(false), 800);
   };
 
   return (
-    <div className="login-form-container">
-      <form className="form-container" onSubmit={submitForm}>
-        <h2>Login</h2>
-
-        <div className="input-container">
-          <label className="input-label" htmlFor="username">USERNAME</label>
-          <input
-            type="text"
-            id="username"
-            className="username-input-field"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
+    <div
+      className="login-main-container"
+      style={{ backgroundImage: `url("images/petExperience.png")` }}
+    >
+      <div className={`login-card ${isSignup ? "rotate-card" : ""}`}>
+        {/* Dog image container */}
+        <div className="dog-container">
+          <img
+            src="/images/dog-face.png" // <-- put your transparent dog PNG here
+            alt="Dog"
+            className="dog-img"
           />
+          {/* eyelids overlay for animation */}
+          <div className={`dog-eye left-eye ${isTyping ? "closed" : ""} ${showPassword ? "peek" : ""}`}></div>
+          <div className={`dog-eye right-eye ${isTyping ? "closed" : ""}`}></div>
         </div>
 
-        <div className="input-container">
-          <label className="input-label" htmlFor="password">PASSWORD</label>
-          <input
-            type="password"
-            id="password"
-            className="password-input-field"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+        <div className="login-container">
+          <h1>{isSignup ? "Sign Up" : "Login"}</h1>
+
+          <div className="input-group">
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="input-group password-group">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={handlePasswordChange}
+              required
+            />
+            <span className="eye-icon" onClick={togglePassword}>
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
+
+          <button className="login-btn">{isSignup ? "Sign Up" : "Login"}</button>
+
+          {!isSignup && (
+            <p className="switch-signup">
+              Don't have an account? <span onClick={switchToSignup}>Sign Up</span>
+            </p>
+          )}
         </div>
-
-        <button type="submit" className="login-button">Login</button>
-
-        {showSubmitError && <p className="error-message">*{errorMsg}</p>}
-
-        <p className="forgot-password"><Link to="/forgotPassword">Forgot Password?</Link></p>
-        <p className="or-text">or</p>
-        <p className="no-account-text">You don't have an account?</p>
-        <Link to="/signup"><button type="button" className="signup-button">Sign Up</button></Link>
-      </form>
+      </div>
     </div>
   );
 };

@@ -12,12 +12,16 @@ import About from "./components/Pages/About";
 import Contact from "./components/Pages/Contact";
 
 import "./App.css";
+import LoginForm from "./components/Login";
 
 function App() {
   return (
     <>
       <div >
             <Navbar/>
+            {/* <section id="login">
+              <LoginForm/>
+            </section> */}
         <section id="home">
           <Home />
         </section>

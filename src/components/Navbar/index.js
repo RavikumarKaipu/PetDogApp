@@ -24,6 +24,7 @@ const Navbar = () => {
             <Nav.Link href="#pricing" className="nav-link-custom">Pricing</Nav.Link>
             <Nav.Link href="#about" className="nav-link-custom">About</Nav.Link>
             <Nav.Link href="#contact" className="nav-link-custom">Contact</Nav.Link>
+            <Nav.Link href="#login" className="nav-link-custom">Login</Nav.Link>
           </Nav>
         </BsNavbar.Collapse>
       </Container>
