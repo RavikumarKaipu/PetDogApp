@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Cookies from "js-cookie";
 import "./index.css";
 
-const LoginForm = ({onLoginSuccess}) => {
+const API_BASE = "https://pet-dog-backend.vercel.app";
+
+// ✅ Password validation regex
+const passwordRegex =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+const LoginForm = ({ onLoginSuccess }) => {
   const [isSignup, setIsSignup] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showSignupPassword, setShowSignupPassword] = useState(false);
@@ -22,67 +30,138 @@ const LoginForm = ({onLoginSuccess}) => {
     password: "",
   });
 
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Toggle password visibility
   const togglePassword = () => setShowPassword(!showPassword);
   const toggleSignupPassword = () => setShowSignupPassword(!showSignupPassword);
   const toggleConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
-  const handleSignupChange = (e) => {
-    setSignupData({ ...signupData, [e.target.name]: e.target.value });
-  };
+  // Handle input changes
+  const handleSignupChange = (e) =>
+    setSignupData({ ...signupData, [e.target.name]: e.target.value.trimStart() });
 
-  const handleLoginChange = (e) => {
-    setLoginData({ ...loginData, [e.target.name]: e.target.value });
-  };
+  const handleLoginChange = (e) =>
+    setLoginData({ ...loginData, [e.target.name]: e.target.value.trimStart() });
 
-  const handleSignup = (e) => {
+  // ------------------ SIGNUP ------------------
+  const handleSignup = async (e) => {
     e.preventDefault();
     const { fullName, username, email, password, confirmPassword } = signupData;
 
+    // Validation
     if (!fullName || !username || !email || !password || !confirmPassword) {
-      alert("Please fill all fields");
+      setErrors({ signupGeneral: "⚠️ Please fill all fields." });
       return;
     }
-
+    if (!passwordRegex.test(password)) {
+      setErrors({
+        signupGeneral:
+          "⚠️ Password must be at least 8 chars, include uppercase, lowercase, number, and special char.",
+      });
+      return;
+    }
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      setErrors({ signupGeneral: "⚠️ Passwords do not match." });
       return;
     }
-    localStorage.setItem(
-      "user",
-      JSON.stringify({ fullName, username, email, password })
-    );
 
-    alert("Signup successful! Please login.");
-    setIsSignup(false);
-    setSignupData({ fullName: "", username: "", email: "", password: "", confirmPassword: "" });
+    try {
+      setLoading(true);
+      setErrors({});
+      const { data } = await axios.post(`${API_BASE}/api/signup`, {
+        fullName,
+        username,
+        email,
+        password,
+      });
+
+      // Optionally save token (if backend returns it)
+      if (data.token) {
+        Cookies.set("token", data.token, {
+          expires: 7,
+          secure: true,
+          sameSite: "strict",
+        });
+      }
+
+      alert("✅ Signup successful! Please log in now.");
+
+      // Reset form
+      setSignupData({
+        fullName: "",
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+
+      // Flip card back to login form
+      setIsSignup(false);
+    } catch (err) {
+      setErrors({
+        signupGeneral: err.response?.data?.error || "❌ Signup failed",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleLogin = (e) => {
+  // ------------------ LOGIN ------------------
+  const handleLogin = async (e) => {
     e.preventDefault();
     const { username, password } = loginData;
 
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+    let newErrors = {};
+    if (!username) newErrors.username = "⚠️ Username is required.";
+    if (!password) newErrors.password = "⚠️ Password is required.";
 
-    if (storedUser && storedUser.username === username && storedUser.password === password) {
-      alert("Login successful!");
-      onLoginSuccess();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setErrors({});
+      const { data } = await axios.post(`${API_BASE}/api/login`, {
+        username,
+        password,
+      });
+
+      // Save token
+      Cookies.set("token", data.token, {
+        expires: 7,
+        secure: true,
+        sameSite: "strict",
+      });
+
+      alert("✅ Login successful!");
+      onLoginSuccess?.(data);
+
+      // Navigate home
       navigate("/");
-    } else {
-      alert("Invalid credentials. Please try again.");
+    } catch (err) {
+      setErrors({
+        loginGeneral:
+          err.response?.data?.message || "❌ Invalid username or password.",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div
       className="login-main-container"
-      style={{ backgroundImage: `url("images/pexels-apasaric-325185.jpg")` }}
+      style={{ backgroundImage: `url("images/petExperience.png")` }}
     >
       <div className={`login-card ${isSignup ? "rotate-card" : ""}`}>
         {/* Login Form */}
         <div className="card-face card-front login-style">
-          <h1>Login</h1>
+          <h1>Login Page</h1>
           <form onSubmit={handleLogin}>
             <div className="input-group">
               <input
@@ -91,8 +170,8 @@ const LoginForm = ({onLoginSuccess}) => {
                 value={loginData.username}
                 onChange={handleLoginChange}
                 placeholder="Username"
-                required
               />
+              {errors.username && <p className="error-msg">{errors.username}</p>}
             </div>
             <div className="input-group password-group">
               <input
@@ -101,23 +180,30 @@ const LoginForm = ({onLoginSuccess}) => {
                 value={loginData.password}
                 onChange={handleLoginChange}
                 placeholder="Password"
-                required
               />
               <span className="eye-icon" onClick={togglePassword}>
                 {showPassword ? <FaEye /> : <FaEyeSlash />}
               </span>
+              {errors.password && <p className="error-msg">{errors.password}</p>}
             </div>
-            <button type="submit" className="login-btn">Login</button>
+            <button type="submit" className="login-btn" disabled={loading}>
+              {loading ? "Logging in..." : "Login"}
+            </button>
+            {errors.loginGeneral && (
+              <p className="error-msg">{errors.loginGeneral}</p>
+            )}
           </form>
           <h5>or</h5>
           <p className="switch-signup">
             Don’t have an account?{" "}
-            <span className="sign-name" onClick={() => setIsSignup(true)}>Sign Up</span>
+            <span className="sign-name" onClick={() => setIsSignup(true)}>
+              Sign Up
+            </span>
           </p>
         </div>
 
         {/* Signup Form */}
-        <div className="card-face card-back signup-style">
+        <div className="card-face card-back-log signup-style">
           <h1>Create Account</h1>
           <form onSubmit={handleSignup}>
             <div className="input-group">
@@ -127,7 +213,6 @@ const LoginForm = ({onLoginSuccess}) => {
                 value={signupData.fullName}
                 onChange={handleSignupChange}
                 placeholder="Full Name"
-                required
               />
             </div>
             <div className="input-group">
@@ -137,7 +222,6 @@ const LoginForm = ({onLoginSuccess}) => {
                 value={signupData.username}
                 onChange={handleSignupChange}
                 placeholder="Username"
-                required
               />
             </div>
             <div className="input-group">
@@ -147,7 +231,6 @@ const LoginForm = ({onLoginSuccess}) => {
                 value={signupData.email}
                 onChange={handleSignupChange}
                 placeholder="Email"
-                required
               />
             </div>
             <div className="input-group password-group">
@@ -157,10 +240,9 @@ const LoginForm = ({onLoginSuccess}) => {
                 value={signupData.password}
                 onChange={handleSignupChange}
                 placeholder="Password"
-                required
               />
               <span className="eye-icon" onClick={toggleSignupPassword}>
-                {showSignupPassword ? <FaEyeSlash /> : <FaEye />}
+                {showSignupPassword ? <FaEye /> : <FaEyeSlash />}
               </span>
             </div>
             <div className="input-group password-group">
@@ -170,13 +252,17 @@ const LoginForm = ({onLoginSuccess}) => {
                 value={signupData.confirmPassword}
                 onChange={handleSignupChange}
                 placeholder="Confirm Password"
-                required
               />
               <span className="eye-icon" onClick={toggleConfirmPassword}>
-                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
               </span>
             </div>
-            <button type="submit" className="signup-btn">Sign Up</button>
+            <button type="submit" className="signup-btn" disabled={loading}>
+              {loading ? "Signing up..." : "Sign Up"}
+            </button>
+            {errors.signupGeneral && (
+              <p className="error-msg">{errors.signupGeneral}</p>
+            )}
           </form>
           <p className="switch-signup">
             Already have an account?{" "}
