@@ -6,6 +6,7 @@
   font-size: 1.4rem;
   color: #f8f9fa !important;
   transition: color 0.3s;
+  
 }
 
 .brand-logo:hover {
@@ -19,6 +20,7 @@
   font-weight: 500;
   position: relative;
   transition: color 0.3s ease-in-out;
+
 }
 
 
@@ -56,3 +58,4 @@ html {
   scroll-padding-top: 80px; 
   
 }
+

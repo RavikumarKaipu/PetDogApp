@@ -74,3 +74,22 @@ p {
     padding: 8px 16px;
   }
 }
+
+/* Remove white modal box */
+.custom-modal-content {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0;
+}
+
+/* Remove modal padding/margins */
+.custom-modal-dialog {
+  max-width: unset !important;
+  margin: 0 auto;
+}
+
+/* Darken background slightly (optional) */
+.custom-modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}

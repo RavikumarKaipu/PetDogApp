@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Cookies from "js-cookie";
-
+import React, { useState } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./components/Pages/Home";
@@ -12,81 +9,92 @@ import Reviews from "./components/Pages/Reviews";
 import Pricing from "./components/Pages/Pricing";
 import About from "./components/Pages/About";
 import Contact from "./components/Pages/Contact";
-import LoginForm from "./components/Login";
 import "./App.css";
-import ProtectedRoute from "./components/ProtectedPage";
+import LoginForm from "./components/Login";
+import { Modal, Toast, ToastContainer } from "react-bootstrap";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const token = Cookies.get("token");
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
+  const [showLogin, setShowLogin] = useState(false);
+  const [formMode, setFormMode] = useState("login");
+  const [showToast, setShowToast] = useState(false);
 
   const handleLogout = () => {
-    Cookies.remove("token");
     setIsLoggedIn(false);
+    setShowToast(true); // 👈 trigger toast on logout
   };
 
   return (
-    <Router>
-      {isLoggedIn && <Navbar onLogout={handleLogout} />}
-      <Routes>
-        {/* If logged in → go to "/", else → show login */}
-        <Route
-          path="/login"
-          element={
-            isLoggedIn ? (
-              <Navigate to="/" />
-            ) : (
-              <LoginForm onLoginSuccess={() => setIsLoggedIn(true)} />
-            )
-          }
-        />
+    <>
+      <Navbar
+        isLoggedIn={isLoggedIn}
+        onLogout={handleLogout}
+        onShowLogin={() => {
+          setFormMode("login");
+          setShowLogin(true);
+        }}
+        onShowSignup={() => {
+          setFormMode("signup");
+          setShowLogin(true);
+        }}
+      />
 
-        {/* Protected Routes */}
-        <Route
-          path="/"
-          element={
-            isLoggedIn ? (
-              <>
-                <section id="home">
-                  <Home />
-                </section>
-                <section id="services">
-                  <Services />
-                </section>
-                <section id="programs">
-                  <Programs />
-                </section>
-                <section id="gallery">
-                  <Gallery />
-                </section>
-                <section id="reviews">
-                  <Reviews />
-                </section>
-                <section id="pricing">
-                  <Pricing />
-                </section>
-                <section id="about">
-                  <About />
-                </section>
-                <section id="contact">
-                  <Contact />
-                </section>
-                <Footer />
-              </>
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-        <Route path="*" element={<Navigate to={isLoggedIn ? "/" : "/login"} />} />
-      </Routes>
-    </Router>
+      {/* 🔹 Login/Signup Modal */}
+      <Modal
+        show={showLogin}
+        onHide={() => {
+          setShowLogin(false);
+          setFormMode("login");
+        }}
+        centered
+        size="lg"
+        contentClassName="custom-modal-content"
+        dialogClassName="custom-modal-dialog"
+        backdropClassName="custom-modal-backdrop"
+      >
+        <Modal.Body>
+          <LoginForm
+            initialMode={formMode}
+            onLoginSuccess={(data) => {
+              setIsLoggedIn(true);
+              setShowLogin(false);
+              setFormMode("login");
+            }}
+            onClose={() => {
+              setShowLogin(false);
+              setFormMode("login");
+            }}
+          />
+        </Modal.Body>
+      </Modal>
+
+      {/* 🔹 Toast Notification */}
+      <ToastContainer position="top-center" className="mt-3">
+        <Toast
+          onClose={() => setShowToast(false)}
+          show={showToast}
+          delay={3000}
+          autohide
+          bg="light"
+        >
+          <Toast.Body className="text-success fw-bold">
+            ✅ You have been logged out successfully.
+          </Toast.Body>
+        </Toast>
+      </ToastContainer>
+
+      {/* 🔹 Main Sections */}
+      <section id="home"><Home /></section>
+      <section id="services"><Services /></section>
+      <section id="programs"><Programs /></section>
+      <section id="gallery"><Gallery /></section>
+      <section id="reviews"><Reviews /></section>
+      <section id="pricing"><Pricing /></section>
+      <section id="about"><About /></section>
+      <section id="contact"><Contact /></section>
+
+      <Footer />
+    </>
   );
 }
 
