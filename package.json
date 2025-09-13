@@ -9,6 +9,8 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.11.0",
     "bootstrap": "^5.3.8",
+    "emailjs": "^4.0.3",
+    "emailjs-com": "^3.2.0",
     "js-cookie": "^3.0.5",
     "lucide": "^0.542.0",
     "lucide-react": "^0.542.0",

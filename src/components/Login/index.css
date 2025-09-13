@@ -144,3 +144,97 @@
     width: 95%;
   }
 }
+
+/* --- Sliding panes inside the front card (login <-> forgot) --- */
+
+/* keep front face overflow hidden so only inner content moves */
+.card-face.card-front {
+  overflow: hidden;
+  position: relative;
+}
+
+/* container that masks overflow */
+.pane-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* sliding inner: 2 panes horizontally, each pane equals the card width */
+.sliding-inner {
+  display: flex;
+  width: 200%;
+  transform: translateX(0);
+  transition: transform 1s cubic-bezier(.2,.9,.3,1);
+  will-change: transform;
+}
+
+/* when showing forgot pane, move left by half (50% of sliding-inner = one pane) */
+.sliding-inner.show-forgot {
+  transform: translateX(-50%);
+}
+
+/* each pane occupies 50% of the sliding-inner (which equals full card width) */
+.pane {
+  width: 50%;
+  padding: 10px 8px; /* small inner padding; card-face already has outer padding */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+/* make headings consistent and centered */
+.pane h1 {
+  margin-bottom: 18px;
+  font-size: 22px;
+  text-align: center;
+}
+
+/* keep existing login-style / forgot styles */
+.switch-forgot,
+.switch-signup {
+  margin-top: 12px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.switch-forgot span,
+.switch-signup span {
+  color: #4200f7;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.switch-forgot span:hover,
+.switch-signup span:hover {
+  text-decoration: underline;
+}
+
+/* success message (for forgot) */
+.success-msg {
+  color: #0a8a0a;
+  font-size: 13px;
+  margin-top: 8px;
+  text-align: left;
+}
+
+/* keep error messages as before but ensure left alignment inside pane */
+.error-msg {
+  color: red;
+  font-size: 13px;
+  margin-top: 6px;
+  text-align: left;
+}
+
+
+@media (max-width: 480px) {
+  .pane {
+    padding: 8px 6px;
+  }
+  .pane h1 {
+    font-size: 20px;
+  }
+}
